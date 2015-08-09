@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+
+			<div class="jumbotron well" align="center">
+				<h2 align="center">
+					<%= server.serverName %>
+				</h2>
+
+
+				<form action="/viewEntry" method="POST" >
+				ID: <input type="text" name="id" value="<%= server.id %>" readonly> <br>
+				Name: <input type="text" name="serverName" value="<%= server.serverName %>" readonly> <br>					
+				IP: <input type="text" name="ip" value="<%= server.ip %>"> <br>				
+				Port: <input type="text" name="port" value="27015"><br>	
+				Player Count: <%= server.currentPlayers %>/<%= server.maxPlayers %>
+				<br><br>
+				<input type="submit" value="Update">
+				</form> <br> <br>
+
+				<form method="post" action="/deleteEntry"> 
+				  <button type="submit" name="id" value="<%= server.id %>">Delete</button>
+				</form>
+
+				<% if(msg) { %>
+				<%= msg %>
+				<% } %>
+
+
+			</div>

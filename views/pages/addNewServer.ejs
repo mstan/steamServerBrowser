@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+
+			<div class="jumbotron well" align="center">
+				<h2 align="center">
+					New Server
+				</h2>
+
+
+				<form action="/new" method="POST" >
+				IP: <input type="text" name="ip" value=""> <br>
+				Port: <input type="text" name="port" value="27015"><br>		
+				<br><br>
+				<input type="submit" value="Submit">
+				</form>
+
+				<% if(msg) { %>
+				<%= msg %>
+				<% } %>
+
+
+			</div>

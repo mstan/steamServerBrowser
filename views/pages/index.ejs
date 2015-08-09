@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+
+
+
+
+			<div class="jumbotron well">
+				<h2 align="center">
+					Server List
+				</h2>
+				<table class="table table-bordered table-striped">  
+				  <thead>
+				    <tr>
+				      <th>Server Name</th>
+				      <th>Map</th>
+				      <th>Players</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  <!-- Build a row for every single server coming out of index right now -->
+				  <% servers.forEach(function (server) { %> 
+				      <tr>
+				      <td><%= server.serverName %></td>
+				      <td><%= server.map %></td>
+				      <td><%= server.currentPlayers %> / <%= server.maxPlayers %></td>
+
+				  <% }); %>
+
+				  </tbody>
+				</table>
+
+				<form action="/" method="POST" >
+				Map: <input type="text" name="map" value=""> <br>
+				Minimum Players: <input type="text" name="minPlayers" value="0"><br>		
+				Max Players: <input type="text" name="maxPlayers" value="32"><br>
+				<input type="checkbox" name="serverNotFull" value="true" checked="checked">Server Not Full<br>
+				<br><br>
+				<input type="submit" value="Submit">
+				</form>
+
+
+			</div>

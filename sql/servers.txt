@@ -1,0 +1,4 @@
+// Reference to create table function. This file is not actually used by the server, and is only intended for the end user to make use of on their own.
+
+
+CREATE TABLE "servers" ("id" INTEGER PRIMARY KEY  NOT NULL ,"ip" VARCHAR NOT NULL ,"port" INTEGER NOT NULL  DEFAULT (27015) ,"serverName" VARCHAR NOT NULL  DEFAULT (null) ,"serverStatus" BOOL DEFAULT (0) ,"currentPlayers" INTEGER,"maxPlayers" INTEGER,"map" VARCHAR)
