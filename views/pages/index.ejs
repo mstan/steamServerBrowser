@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 
 <link rel="stylesheet" href="bootstrap.css">
-<link rel="stylesheet" href="css/bootstrap.css">
+<script="jquery.js" >
 
+<%- include('../partials/navbar') %>
 
 
 
@@ -22,9 +23,10 @@
 				  <!-- Build a row for every single server coming out of index right now -->
 				  <% servers.forEach(function (server) { %> 
 				      <tr>
-				      <td><%= server.serverName %></td>
+				      <td><%= server.serverName %> <a href="/publicServer/<%= server.id %>">View</a></td>
 				      <td><%= server.map %></td>
 				      <td><%= server.currentPlayers %> / <%= server.maxPlayers %></td>
+
 
 				  <% }); %>
 

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+
+			<div class="jumbotron well" align="center">
+				<h2 align="center">
+					<%= server.serverName %>
+				</h2>
+
+
+				<form action="/connectToServer" method="POST" >
+				ID: <%= server.id %><br>
+				Name: <%= server.serverName %><br>					
+				IP: <input type="text" name="ip" value="<%= server.ip %>:<%= server.port%>" readonly> <br>		
+				Map: <%= server.map %> <br>		
+				Player Count: <%= server.currentPlayers %>/<%= server.maxPlayers %>
+				<br><br>
+				<input type="submit" value="Connect">
+				</form> <br> <br>
+
+
+
+				<% if(msg) { %>
+				<%= msg %>
+				<% } %>
+
+
+			</div>
