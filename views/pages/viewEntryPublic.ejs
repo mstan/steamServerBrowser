@@ -1,27 +1,28 @@
 <!DOCTYPE HTML>
 <%- include('../partials/navbar') %>
 
-			<div class="jumbotron well" align="center">
-				<h2 align="center">
-					<%= server.serverName %>
-				</h2>
+      <div class="jumbotron well" align="center">
+        <h2 align="center">
+          <%= server.serverName %>
+        </h2>
 
 
-				<form action="/connectToServer" method="POST" >
-				ID: <%= server.id %><br>
-				Name: <%= server.serverName %><br>					
-				IP: <input type="text" name="ip" value="<%= server.ip %>:<%= server.port%>" readonly> <br>		
-				Map: <%= server.map %> <br>		
-				Player Count: <%= server.currentPlayers %>/<%= server.maxPlayers %>
-				<br><br>
-				<input type="submit" value="Connect">
-				</form> <br> <br>
+        <form action="/connectToServer" method="POST" >
+        ID: <%= server.id %><br>
+        Name: <%= server.serverName %><br>          
+        IP: <input type="text" name="ip" value="<%= server.ip %>:<%= server.port%>" readonly> <br>
+        Map: <%= server.map %> <br>    
+        Player Count: <%= server.currentPlayers %>/<%= server.maxPlayers %> <br>
+         <%= server.description %> <br>
+        <br><br>
+        <input type="submit" value="Connect">
+        </form> <br> <br>
 
 
 
-				<% if(msg) { %>
-				<%= msg %>
-				<% } %>
+        <% if(msg) { %>
+          <%= msg %>
+        <% } %>
 
 
-			</div>
+      </div>

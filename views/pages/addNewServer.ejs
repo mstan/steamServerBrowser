@@ -1,22 +1,23 @@
 <!DOCTYPE HTML>
 <%- include('../partials/navbar') %>
 
-			<div class="jumbotron well" align="center">
-				<h2 align="center">
-					New Server
-				</h2>
+      <div class="jumbotron well" align="center">
+        <h2 align="center">
+          New Server
+        </h2>
 
 
-				<form action="/new" method="POST" >
-				IP: <input type="text" name="ip" value=""> <br>
-				Port: <input type="text" name="port" value="27015"><br>		
-				<br><br>
-				<input type="submit" value="Submit">
-				</form>
+        <form action="/new" method="POST" >
+        IP: <input type="text" name="ip" value="" placeholder="12.34.56.78"> <br>
+        Port: <input type="text" name="port" value="27015"><br>
+        Description: <input type="text" name="description" value="" placeholder="Tell us a little something about your server!" size="50">    
+        <br><br>
+        <input type="submit" value="Submit">
+        </form>
 
-				<% if(msg) { %>
-				<%= msg %>
-				<% } %>
+        <% if(msg) { %>
+        <%= msg %>
+        <% } %>
 
 
-			</div>
+      </div>

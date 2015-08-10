@@ -21,6 +21,7 @@ var entryByIDHandler = require('./lib/entryByIDHandler.js');
 //User
 var connectToServerDirect = require('./lib/connectToServerDirect.js');
 var viewServer = require('./lib/viewServer.js');
+var viewAllServersByOwner = require('./lib/viewAllServersByOwner');
 
 //Passport
 var steamStrategyConfiguration = require('./lib/steamStrategy.js');
@@ -138,6 +139,7 @@ app.post('/new', userLoggedInCheck, addNewServer.POST);
 app.get('/viewEntry/:id', entryByIDHandler.viewEntry);
 app.post('/viewEntry/', entryByIDHandler.updateEntry);
 app.post('/deleteEntry/', entryByIDHandler.deleteEntry);
+app.get('/viewMyServers/', userLoggedInCheck, viewAllServersByOwner);
 
   //User View Entry
 app.get ('/publicServer/:id', viewServer);

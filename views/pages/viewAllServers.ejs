@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+
+<%- include('../partials/navbar') %>
+
+
+
+      <div class="jumbotron well">
+        <h2 align="center">
+          Server List
+        </h2>
+        <table class="table table-bordered table-striped">  
+          <thead>
+            <tr>
+              <th>Server Name</th>
+              <th>Map</th>
+              <th>Players</th>
+              <th>Status</th>              
+            </tr>
+          </thead>
+          <tbody>
+          <!-- Build a row for every single server coming out of index right now -->
+          <% servers.forEach(function (server) { %> 
+              <tr>
+              <td><%= server.serverName %> <a href="/viewEntry/<%= server.id %>">Edit</a></td>
+              <td><%= server.map %></td>
+              <td><%= server.currentPlayers %> / <%= server.maxPlayers %></td>
+              <td><%= server.serverStatus %></td>
+
+
+          <% }); %>
+
+          </tbody>
+        </table>
+
+
+
+      </div>

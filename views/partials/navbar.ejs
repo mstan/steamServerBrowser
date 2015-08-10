@@ -1,72 +1,75 @@
 <!DOCTYPE HTML>
 <!-- partials/navbar.ejs -->
 
-			<!-- include -->
-			<link rel="stylesheet" href="/bootstrap.css">
-			<link rel="stylesheet" href="/jquery.js">
+      <!-- include -->
+      <link rel="stylesheet" href="/bootstrap.css">
+      <link rel="stylesheet" href="/jquery.js">
 
 
 <% if(!authStatus) { %>
 
 
 
-			<!--navbar-->
+      <!--navbar-->
 
-			<nav class="navbar navbar-default navbar-static-top" role="navigation">
-				<div class="navbar-header">
-					 
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					</button> <a class="navbar-brand" href="/">Home</a>
-				</div>
-				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
+      <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+           
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+             <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button> <a class="navbar-brand" href="/">Home</a>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
 
-					</ul>
+          </ul>
 
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="/auth/steam">Login</a>
-						</li>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/auth/steam">Login</a>
+            </li>
 
-					</ul>
-				</div>
-				
-			</nav>
+          </ul>
+        </div>
+        
+      </nav>
 
 <% } %>
 
 <% if(authStatus) { %>
 
-			<!--navbar-->
+      <!--navbar-->
 
-			<nav class="navbar navbar-default navbar-static-top" role="navigation">
-				<div class="navbar-header">
-					 
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					</button> <a class="navbar-brand" href="/">Home</a>
-				</div>
-				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="/new">Add New</a>
-						</li>
-					</ul>
+      <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+           
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+             <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button> <a class="navbar-brand" href="/">Home</a>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/new">Add New</a>
+            </li>
+            <li>
+              <a href="/viewMyServers">My Servers</a>
+            </li>            
+          </ul>
 
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-								<img src="<%= user._json.avatar%>" /> <%= user._json.personaname %>				
-						</li>
-						<li>
-							<a href="/auth/steam">Logout</a>
-						</li>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+                <img src="<%= user._json.avatar%>" /> <%= user._json.personaname %>        
+            </li>
+            <li>
+              <a href="/auth/steam">Logout</a>
+            </li>
 
-					</ul>
-				</div>
-				
-			</nav>
+          </ul>
+        </div>
+        
+      </nav>
 
-	<% } %>
+  <% } %>
