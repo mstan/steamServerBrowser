@@ -3,78 +3,144 @@ var express = require('express');
 var ejs = require('ejs');
 var sqlite3 = require('sqlite3');
 var bodyParser = require('body-parser');
-//var steamServerStatus = require('steam-server-status');
-//var async = require('async');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 /* lib */
-
+//Middleware
+var middlewareTokens = require('./lib/middlewareTokens.js');
+var userLoggedInCheck = require('./lib/userLoggedInCheck.js');
+var getTokenByID = require('./lib/getTokenByID');
+//Public Table Query
 var loadAll = require('./lib/loadAll.js');
 var searchFilter = require('./lib/searchFilter');
+//Admin
 var addNewServer = require('./lib/addNewServer');
-var getTokenByID = require('./lib/getTokenByID');
-var updateEntryByID = require('./lib/updateEntryByID');
-var deleteEntryByID = require('./lib/deleteEntryByID');
-var connectToServerDirect = require('./lib/connectToServerDirect');
+var entryByIDHandler = require('./lib/entryByIDHandler.js');
+//User
+var connectToServerDirect = require('./lib/connectToServerDirect.js');
+var viewServer = require('./lib/viewServer.js');
 
+//Passport
+var steamStrategyConfiguration = require('./lib/steamStrategy.js');
+passport.use(steamStrategyConfiguration);
 
 /* Start Express */
 var app = express();
 
-
-//start db
+/* Start Database */
 var dbFile = './db/db.sqlite';
 var db = new sqlite3.Database(dbFile);
-
-/* middleware */
-app.use(bodyParser.urlencoded({ extended: false }));
-
-  //For deps to hook reqs
 app.use(function (req,res,next) {
-  res.locals.msg = req.query.msg || null;
   req.db = db;
   next();
 });
 
+/* Middleware */
 app.param('id', getTokenByID);
 
-app.set(express.static(__dirname + 'views'));
-app.use(express.static(__dirname + '/bower_components/bootstrap/dist/css'));
-app.use(express.static(__dirname + '/bower_components/jquery/dist/'));
 app.set('view engine', 'ejs');
 
+app.set(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/bower_components/bootstrap/dist/css'));
+app.use(express.static(__dirname + '/bower_components/jquery/dist/'));
+
+app.use(session({secret: 'secret token', resave: true, saveUninitialized: true}));
+app.use(cookieParser('super secret token'));
+app.use(passport.initialize());
+app.use(passport.session()); //Q: User not defined when session handler is trying to be used
+app.use(bodyParser.urlencoded({ extended: false }));
+
+/* Global Parameterization */
+
+/* ============================ 
+
+    The following exist to
+    globalize some of our vars
+
+    res.locals.user/req.user -
+    Exists for when information
+    is needed about our user.
+
+   ============================ */
+
+  //For Req/Res to hook Deps
+app.use(middlewareTokens);
+
+  //User Status via req.user
+app.use(function (req,res, next) {
+  var passedUser = req.user || 'undefined user';
+
+  //console.log('This page was loaded as: ');
+  //console.log(passedUser);
+  //console.log(res.locals.authStatus);
+  next();
+});
+
+
+/* Middleware for Steam Auth/Passport */
+
+/* ============================ 
+
+    The following all exists for
+    Passport. Since we use Steam,
+    we have a steam redirect,
+    a steam return, and 
+    seralization functions
+    for our end user
+
+   ============================ */
+
+app.get('/auth/steam',
+  passport.authenticate('steam'),
+  function (req, res) {
+    // The request will be redirected to Steam for authentication, so
+    // this function will not be called.
+  });
+
+app.get('/auth/steam/return',
+  passport.authenticate('steam', { failureRedirect: '/'}),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+}); 
+ 
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
 
 
 /* Routing */
 
+/* ============================ 
+
+    userLoggedInCheck should be 
+    run for any route that would
+    require a logged user to 
+    initiate.
+
+   ============================ */
+
   //Index
 app.get('/', loadAll);
-
 app.post('/', searchFilter);
 
   //New Server
-app.get('/new', function (req,res) {
-  res.render('pages/addNewServer');
-})
-
-app.post('/new', addNewServer);
+app.get('/new', userLoggedInCheck, addNewServer.GET);
+app.post('/new', userLoggedInCheck, addNewServer.POST);
 
   //Admin View Entry
-
-app.get('/viewEntry/:id', function (req,res) {
-    server = req.server;
-    res.render('pages/viewEntryAdmin', {server: server});
-});
-
-app.post('/viewEntry/', updateEntryByID);
-
-app.post('/deleteEntry/', deleteEntryByID);
+app.get('/viewEntry/:id', entryByIDHandler.viewEntry);
+app.post('/viewEntry/', entryByIDHandler.updateEntry);
+app.post('/deleteEntry/', entryByIDHandler.deleteEntry);
 
   //User View Entry
-
-app.get ('/publicServer/:id', function (req,res) {
-    res.render('pages/viewEntryPublic');
-});
-
+app.get ('/publicServer/:id', viewServer);
 app.post ('/connectToServer/', connectToServerDirect);
 
 

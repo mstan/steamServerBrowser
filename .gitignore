@@ -2,3 +2,4 @@ indexlive.js
 /node_modules/
 /bower_components/
 /db/
+/lib/steamStrategy.js

@@ -2,7 +2,13 @@
 <!-- partials/navbar.ejs -->
 
 			<!-- include -->
-			<link rel="stylesheet" href="bootstrap.css">
+			<link rel="stylesheet" href="/bootstrap.css">
+			<link rel="stylesheet" href="/jquery.js">
+
+
+<% if(!authStatus) { %>
+
+
 
 			<!--navbar-->
 
@@ -18,20 +24,49 @@
 					<ul class="nav navbar-nav">
 
 					</ul>
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> 
-						<button type="submit" class="btn btn-default">
-							Submit
-						</button>
-					</form>
+
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="#">Link</a>
+							<a href="/auth/steam">Login</a>
 						</li>
 
 					</ul>
 				</div>
 				
 			</nav>
+
+<% } %>
+
+<% if(authStatus) { %>
+
+			<!--navbar-->
+
+			<nav class="navbar navbar-default navbar-static-top" role="navigation">
+				<div class="navbar-header">
+					 
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="/">Home</a>
+				</div>
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="/new">Add New</a>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+								<img src="<%= user._json.avatar%>" /> <%= user._json.personaname %>				
+						</li>
+						<li>
+							<a href="/auth/steam">Logout</a>
+						</li>
+
+					</ul>
+				</div>
+				
+			</nav>
+
+	<% } %>
