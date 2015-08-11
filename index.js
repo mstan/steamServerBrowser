@@ -41,7 +41,6 @@ app.use(function (req,res,next) {
 var steamStrategyConfiguration = require('./lib/steamStrategy.js');
 passport.use(steamStrategyConfiguration);
 
-/* Middleware */
 app.param('id', getTokenByID);
 
 app.set('view engine', 'ejs');
@@ -72,15 +71,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
   //For Req/Res to hook Deps
 app.use(middlewareTokens);
 
-  //User Status via req.user
-app.use(function (req,res, next) {
-  var passedUser = req.user || 'undefined user';
 
-  //console.log('This page was loaded as: ');
-  //console.log(passedUser);
-  //console.log(res.locals.authStatus);
-  next();
-});
 
 
 /* Middleware for Steam Auth/Passport */
