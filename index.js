@@ -22,10 +22,9 @@ var entryByIDHandler = require('./lib/entryByIDHandler.js');
 var connectToServerDirect = require('./lib/connectToServerDirect.js');
 var viewServer = require('./lib/viewServer.js');
 var viewAllServersByOwner = require('./lib/viewAllServersByOwner');
+var addNewUserIfNotExists = require('./lib/addNewUserIfNotExists');
 
-//Passport
-var steamStrategyConfiguration = require('./lib/steamStrategy.js');
-passport.use(steamStrategyConfiguration);
+
 
 /* Start Express */
 var app = express();
@@ -37,6 +36,10 @@ app.use(function (req,res,next) {
   req.db = db;
   next();
 });
+
+//Passport
+var steamStrategyConfiguration = require('./lib/steamStrategy.js');
+passport.use(steamStrategyConfiguration);
 
 /* Middleware */
 app.param('id', getTokenByID);
@@ -102,10 +105,7 @@ app.get('/auth/steam',
 
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/'}),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+  addNewUserIfNotExists);
 
 passport.serializeUser(function (user, done) {
   done(null, user);

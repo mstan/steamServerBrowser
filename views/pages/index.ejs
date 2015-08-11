@@ -31,14 +31,23 @@
 				</table>
 
 				<form action="/" method="POST" >
-				Map: <input type="text" name="map" value=""> <br>
+				Map: <input type="text" name="map" value="<%= defaultSearchVars.map %>"> <br>
 
-				Minimum Players: <input type="text" name="minPlayers" value="0"><br>		
+				Minimum Players: <input type="text" name="minPlayers" value="<%= defaultSearchVars.currentPlayers %>"><br>		
 
-				Max Players: <input type="text" name="maxPlayers" value="32"><br>
+				Max Players: <input type="text" name="maxPlayers" value="<%= defaultSearchVars.maxPlayers %>"><br>
 
-				<input type="checkbox" name="serverNotFull" value="true" checked="checked">Server Not Full<br>
+				<input type="checkbox" 
+							 name="serverNotFull" 
+							 value="true"
+							 <% if(defaultSearchVars.serverNotFull) { %>
+							 	<%= "checked" %>
+							 <% } %>
+							 >
+							 Server Not Full<br>
+
 				<br><br>
+
 				Sort By:
 				<select name="orderByParameter">
 				<option value="serverName">Server Name</option>
@@ -46,7 +55,16 @@
 				<option value="currentPlayers">Current Player Count</option>
 				<option value="maxPlayers">Max Player Count</option>
 				</select>
-				<input type="checkbox" name="orderByDESC" value="true" checked="checked">Sort in Descending Order<br>
+
+				<input type="checkbox" 
+							 name="orderByDESC" 
+							 value="true" 
+							 <% if(defaultSearchVars.orderByDESC) { %>
+							 	<%= "checked" %>
+							 <% } %>
+							 >
+							 Sort in Descending Order<br>
+
 				<br><br>
 
 				<input type="submit" value="Submit">
