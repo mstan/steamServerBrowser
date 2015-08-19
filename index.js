@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 /* lib */
+//Automated
+var steamServerStatus = require('./lib/steamServerStatus.js');
 //Middleware
 var middlewareTokens = require('./lib/middlewareTokens.js');
 var userLoggedInCheck = require('./lib/userLoggedInCheck.js');
@@ -19,8 +21,8 @@ var searchFilter = require('./lib/searchFilter');
 var addNewServer = require('./lib/addNewServer');
 var entryByIDHandler = require('./lib/entryByIDHandler.js');
 //User
-var connectToServerDirect = require('./lib/connectToServerDirect.js');
-var viewServer = require('./lib/viewServer.js');
+//var connectToServerDirect = require('./lib/connectToServerDirect.js');
+var viewServerPublic = require('./lib/viewServerPublic.js');
 var viewAllServersByOwner = require('./lib/viewAllServersByOwner');
 var addNewUserIfNotExists = require('./lib/addNewUserIfNotExists');
 
@@ -56,6 +58,9 @@ app.use(passport.session()); //Q: User not defined when session handler is tryin
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* Global Parameterization */
+var servers = {};
+var updatedServerList = {};
+
 
 /* ============================ 
 
@@ -71,9 +76,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
   //For Req/Res to hook Deps
 app.use(middlewareTokens);
 
-
-
-
 /* Middleware for Steam Auth/Passport */
 
 /* ============================ 
@@ -84,6 +86,16 @@ app.use(middlewareTokens);
     a steam return, and 
     seralization functions
     for our end user
+
+    on the /auth/steam/return, 
+    we pass addNewUserIfNotExists
+    This is a point that it only
+    runs once per login, and
+    the user session is already
+    established. Therefore, it
+    is the ideal time to
+    check if the user has
+    local history.
 
    ============================ */
 
@@ -133,8 +145,12 @@ app.post('/deleteEntry/', entryByIDHandler.deleteEntry);
 app.get('/viewMyServers/', userLoggedInCheck, viewAllServersByOwner);
 
   //User View Entry
-app.get ('/publicServer/:id', viewServer);
-app.post ('/connectToServer/', connectToServerDirect);
+app.get('/publicServer/:id', viewServerPublic.GET);
+app.post('/connectToServer/', viewServerPublic.directConnect);
+
+  //Test update function
+app.get('/test', steamServerStatus.getServerList, steamServerStatus.updateEachEntry, steamServerStatus.renderPage);
+
 
 
 /* Start app at this port */
